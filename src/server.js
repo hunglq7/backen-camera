@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5001;
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 
 // public routes
 app.use("/api/auth", authRoute);
