@@ -23,6 +23,9 @@ const TonghoptbSchema = new mongoose.Schema(
       required: true,
       index: true      
     },
+    loaitb:{
+      type:String
+    },
     camera_ip: {
       type: String    
       

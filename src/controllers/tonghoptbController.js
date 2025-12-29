@@ -1,8 +1,8 @@
 import Tonghoptb from "../models/Tonghoptb.js";
 export const createTonghoptb = async (req, res) => {
   try {
-    const { maql, thietbi_id, donvi_id, khuvuc_id, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu } = req.body;
-    const tonghoptb = await Tonghoptb.create({ maql, thietbi_id, donvi_id, khuvuc_id, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu });
+    const { maql, thietbi_id, donvi_id, khuvuc_id,loaitb, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu } = req.body;
+    const tonghoptb = await Tonghoptb.create({ maql, thietbi_id, donvi_id, khuvuc_id,loaitb, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu });
     res.status(201).json({message: "Tổng hợp thiết bị tạo thành công", tonghoptb });
   } catch (error) {
     console.error("Lỗi khi tạo tổng hợp thiết bị:", error);
@@ -34,8 +34,8 @@ export const getTonghoptbById = async (req, res) => {
 export const updateTonghoptb = async (req, res) => {
   try {
     const { id } = req.params;
-    const { maql, thietbi_id, donvi_id, khuvuc_id, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu } = req.body;
-    const tonghoptb = await Tonghoptb.findByIdAndUpdate(id, { maql, thietbi_id, donvi_id, khuvuc_id, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu }, { new: true });
+    const { maql, thietbi_id, donvi_id, khuvuc_id,loaitb, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu } = req.body;
+    const tonghoptb = await Tonghoptb.findByIdAndUpdate(id, { maql, thietbi_id, donvi_id, khuvuc_id,loaitb, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu }, { new: true });
     if (!tonghoptb) {
       return res.status(404).json({ message: "Không tìm thấy tổng hợp thiết bị" });
     }
