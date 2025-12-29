@@ -5,10 +5,12 @@ import {
   getThietbiiById,
     updateThietbi,
     deleteThietbi,
-    deleteManyThietbi
+    deleteManyThietbi,
+    uploadExcel
 } from "../controllers/thietbiController.js";
+import multer from 'multer';
+const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
-
 router.post("/", createThietbi);
 router.get("/", getAllThietbi);
 // bulk delete selected
@@ -18,5 +20,6 @@ router.put("/:id", updateThietbi);
 router.delete("/:id", deleteThietbi);
 // legacy delete all (if used) kept at root
 router.delete("/", deleteManyThietbi);
+router.post("/upload-thietbi-excel",upload.single('excelFile'),uploadExcel)
 
 export default router;
