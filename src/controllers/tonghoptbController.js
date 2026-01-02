@@ -4,17 +4,37 @@ import fs from 'fs';
 import path from 'path';
 
 // Hàm parse ngày tháng từ string DD/MM/YYYY
-const parseDate = (dateStr) => {
-  if (!dateStr) return null;
-  if (dateStr instanceof Date) return dateStr;
-  if (typeof dateStr === 'number') return new Date(dateStr); // Excel serial date
-  const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+const parseDate = (value) => {
+  if (!value) return null;
+
+  // Nếu đã là Date
+  if (value instanceof Date && !isNaN(value)) {
+    return value;
+  }
+
+  // ✅ Excel serial date (NUMBER)
+  if (typeof value === 'number') {
+    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+    return new Date(excelEpoch.getTime() + value * 86400000);
+  }
+
+  // ✅ String yyyy-mm-dd
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return new Date(value + 'T00:00:00Z');
+  }
+
+  // ✅ String dd/mm/yyyy
+  const match = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (match) {
     const [, day, month, year] = match;
-    return new Date(year, month - 1, day);
+    return new Date(Date.UTC(year, month - 1, day));
   }
-  return new Date(dateStr); // Thử parse khác
+
+  // Fallback
+  const parsed = new Date(value);
+  return isNaN(parsed) ? null : parsed;
 };
+
 export const createTonghoptb = async (req, res) => {
   try {
     const { maql, thietbi_id, donvi_id, khuvuc_id,loaitb, camera_ip, trangthai, ngaysd, vitri_lapdat, ghichu } = req.body;
